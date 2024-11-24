@@ -1,6 +1,6 @@
 /*main tables*/
 create table patient(
-ID char(9) not null,
+PID char(9) not null,
 ssn numeric(9) not null,
 fname char(10) not null,
 minitial char(1),
@@ -16,15 +16,12 @@ permstate char(2),
 permzipp numeric(5),
 permphone char(9),
 doctorID char(9),
-primary key(ID),
-unique (ssn) ,
-CONSTRAINT PatFK
-foreign key (doctorID) references doctor(ID)
-ON DELETE SET NULL
+primary key(PID),
+unique (ssn)
 );
 
 create table doctor(
-ID char(9) not null,
+DID char(9) not null,
 ssn numeric(9) not null,
 fname varchar(10) not null,
 minitial char(1),
@@ -33,11 +30,8 @@ address varchar(50)not null,
 phonenumber char(9) not null,
 birthdate date not null,
 dcode char(4) DEFAULT '0000',
-primary key (ID),
-unique (ssn),
-CONSTRAINT DocFK
-foreign key (dcode) references department(dcode) 
-ON DELETE SET NULL
+primary key (DID),
+unique (ssn)
 );
 
 create table department(
@@ -47,45 +41,56 @@ dnumber numeric(4) not null,
 dphone numeric(9) not null,
 dheadID char(9) default 'D00000000',
 primary key (dcode),
-unique (dname),
-constraint DeptFK
-foreign key (dheadID) references doctor(ID)
-ON DELETE SET NULL
+unique (dname)
 );
 
 create table medication(
-name varchar(10) not null,
-description varchar(50) not null,
+mname varchar(10) not null,
+mdescription varchar(50) not null,
 manufactuer varchar(20) not null,
-primary key (name)
+primary key (mname)
 );
 
-create table operation(
+create table operation(/*procedure was a keyword renamed to operation*/
 pnumber char(7) not null,
-name varchar(10) not null,
-description varchar(100) not null,
+pname varchar(10) not null,
+pdescription varchar(100) not null,
 offerdep char(4)not null,
-primary key (pnumber),
-CONSTRAINT OperFK
-foreign key (offerdep) references department(dcode)
+primary key (pnumber)
 );
+
+/*alter tables adding constraints*/
+alter table patient add CONSTRAINT PatFK
+foreign key (doctorID) references doctor(DID)
+ON DELETE SET NULL;
+
+alter table doctor add CONSTRAINT DocFK
+foreign key (dcode) references department(dcode) 
+ON DELETE SET NULL;
+
+alter table department add constraint DeptFK
+foreign key (dheadID) references doctor(DID)
+ON DELETE SET NULL;
+
+alter table operation add CONSTRAINT OperFK
+foreign key (offerdep) references department(dcode);
 
 /*supporting/relationship tables*/
 create table interactionRecord(
-ID char(9) not null,
+IID char(9) not null,
 idate date not null,
 description varchar(100) not null,
 patientID char(9) not null,
-primary key (ID),
-foreign key (patientID) references patient(patientID)
+primary key (IID,patientID),
+foreign key (patientID) references patient(PID)
 );
 
 create table secondarydoctor(
 patientID char(9) not null,
 doctorID char(9) not null,
 primary key (patientID,doctorID),
-foreign key (patientID) references patient(ID),
-foreign key (doctorID) references doctor(ID)
+foreign key (patientID) references patient(PID),
+foreign key (doctorID) references doctor(DID)
 );
 
 create table prescription(
@@ -94,9 +99,9 @@ doctorID char(9) not null,
 datePrescribed date not null,
 mname varchar(10) not null,
 primary key (patientId, mname),
-foreign key (patientID) references patient(ID),
-foreign key (doctorID) references doctor(ID),
-foreign key (mname) references medication(name)
+foreign key (patientID) references patient(PID),
+foreign key (doctorID) references doctor(DID),
+foreign key (mname) references medication(mname)
 );
 
 create table undergo(
@@ -105,10 +110,10 @@ doctorID char(9) not null,
 datePreformed date not null,
 notes varchar(100),
 pnumber char(7) not null,
-primary key (patientID, pnumber),
-foreign key (patientID) references patient(ID),
-foreign key (doctorID) references doctor(ID),
-foreign key (pnum) references operation(pnumber)
+primary key (patientID, pnumber, doctorID), /*due to this primary key set up it means that you are able to insert multiple doctors for the same operaction*/
+foreign key (patientID) references patient(PID),
+foreign key (doctorID) references doctor(DID),
+foreign key (pnumber) references operation(pnumber)
 );
 
 /*Front End Notes:
