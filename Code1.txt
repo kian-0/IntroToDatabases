@@ -1,0 +1,101 @@
+
+
+import java.sql.*;
+import java.util.Scanner;
+import java.io.*;  
+
+public class P1 {
+	public static void main (String args []) 
+		throws SQLException
+		{
+		
+		//Gets Oracle UserName and Password
+		System.out.print("userid: ");
+	    String uid = getString();
+
+	    System.out.print("password: ");
+	    String pword = getString();
+		
+	    // Load the Oracle JDBC driver
+	    String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+
+	    
+	    // Connect to the database
+	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+	    
+	    // Connect to the database
+	    Connection conn =
+	    DriverManager.getConnection (url, uid, pword);
+	    
+	    Scanner scnr = new Scanner(System.in);
+	    
+	    
+	    //Inserting Tuples
+	   
+	   PreparedStatement Department = conn.prepareStatement("INSERT INTO DEPARTMENT(Dname,Dcode,officeNumber,officePhone,dHead)" + "VALUES(?,?,?,?,?)");
+	   PreparedStatement Patient = conn.prepareStatement ("INSERT INTO PATIENT(Fname,Minit,Lname,PatientId,SSN,Sex,Bdate,PhoneNumber,Condition,City,State,Zip)" + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+	   //PreparedStatement Doctor = conn.prepareStatement("INSERT INTO DOCTOR");
+
+	   System.out.println("Please choose an option:\n" + "1) Patient\n" + "2) Department");
+	   int option1 = scnr.nextInt();
+	   System.out.println("Please choose how you would like to alter table:\n" +"1) Add\n" + "2) Insert");
+	   int option2 = scnr.nextInt();
+	   System.out.println(option2);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// end of main
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static String getString() {
+		try {
+		    StringBuffer buffer = new StringBuffer();
+	        int c = System.in.read();
+	        while (c != '\n' && c != -1) {
+	    	  buffer.append((char)c);
+	          c = System.in.read();
+	          }
+	        return buffer.toString().trim();
+	        }
+	        catch (IOException e){return "";}
+	    }
+	
+	public static int getInt() 
+
+	  {
+	      String s= getString();
+	      return Integer.parseInt(s);
+	  }
+	
+	
+	
+	
+	
+	
+}// end of class
+
+
+
+
+
+//Extras
+//String departmentD = "INSERT INTO DEPARTMENT(Dname,Dcode,officeNumber,officePhone,dHead)" + "VALUES(?,?,?,?,?)";
