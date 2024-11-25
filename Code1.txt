@@ -1,5 +1,3 @@
-
-
 import java.sql.*;
 import java.util.Scanner;
 import java.io.*;  
@@ -28,7 +26,70 @@ public class P1 {
 	    Connection conn =
 	    DriverManager.getConnection (url, uid, pword);
 	    
+	    
 	    Scanner scnr = new Scanner(System.in);
+	    
+	    int operating = 1; 
+	    
+	    while(operating != 0) {
+	    System.out.println("\n*** Hospital Management System ***");
+	    System.out.println("Please Choose an option!");
+        System.out.println("1. Add a Patient");
+        System.out.println("2. Add a Department");
+        System.out.println("3. Add a Procedure");
+        System.out.println("4. Add a Doctor");
+        System.out.println("5. Add an Interaction Record");
+        System.out.println("6. Generate Health Record for a Patient");
+        System.out.println("7. Find Procedures by Department");
+        System.out.println("8. List Procedures Done by a Doctor");
+        System.out.println("9. Exit");
+        System.out.print("Choose an option: ");
+	    
+	    int option = scnr.nextInt();
+	    scnr.nextLine();
+	    switch (option) {
+	    
+	    case 1:
+	    	addPatient(conn,scnr);
+	    	break;
+	    case 2:
+	    	addDepartment(conn,scnr);
+	    	break;
+	    case 3:
+	    	addProcedure(conn,scnr);
+	    	break;
+	    case 4:
+	    	addDoctor(conn,scnr);
+	    	break;
+	    case 5:
+	    	addInteraction(conn,scnr);
+	    	break;
+	    case 6:
+	    	generateRecord(conn,scnr);
+	    	break;
+	    case 7:
+	    	ProceduresByDepartment(conn,scnr);
+	    	break;
+	    case 8:
+	    	ProceduresByDoctor(conn,scnr);
+	    	break;
+	    case 9:
+	    	operating = 0;
+	    	break;
+	    default:
+	    	System.out.println("Not an option please try again.");
+	    	break;
+	    
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    }
+	    
+	    System.out.println("Database closing! Bye!");
 	    
 	    
 	    //Inserting Tuples
@@ -37,11 +98,7 @@ public class P1 {
 	   PreparedStatement Patient = conn.prepareStatement ("INSERT INTO PATIENT(Fname,Minit,Lname,PatientId,SSN,Sex,Bdate,PhoneNumber,Condition,City,State,Zip)" + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
 	   //PreparedStatement Doctor = conn.prepareStatement("INSERT INTO DOCTOR");
 
-	   System.out.println("Please choose an option:\n" + "1) Patient\n" + "2) Department");
-	   int option1 = scnr.nextInt();
-	   System.out.println("Please choose how you would like to alter table:\n" +"1) Add\n" + "2) Insert");
-	   int option2 = scnr.nextInt();
-	   System.out.println(option2);
+	   
 		
 		
 		
@@ -54,18 +111,55 @@ public class P1 {
 		
 		
 		
-		
-		
+		scnr.close();
 		// end of main
 	}
 	
 	
+	// adds patient to database
+		private static void addPatient(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			System.out.println("Success!");
+		}
 	
+
+		private static void addDepartment(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+
+		private static void addProcedure(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private static void addDoctor(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private static void addInteraction(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private static void generateRecord(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private static void ProceduresByDepartment(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		private static void ProceduresByDoctor(Connection conn, Scanner scnr) {
+			// TODO Auto-generated method stub
+			
+		}
 	
-	
-	
-	
-	
+
 	public static String getString() {
 		try {
 		    StringBuffer buffer = new StringBuffer();
@@ -93,9 +187,3 @@ public class P1 {
 	
 }// end of class
 
-
-
-
-
-//Extras
-//String departmentD = "INSERT INTO DEPARTMENT(Dname,Dcode,officeNumber,officePhone,dHead)" + "VALUES(?,?,?,?,?)";
