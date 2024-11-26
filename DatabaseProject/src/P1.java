@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class P1 {
-    public static void main(String args[])
+    public static void main(String[] args)
             throws SQLException {
 
         //Gets Oracle UserName and Password
@@ -55,7 +55,7 @@ public class P1 {
                     addPatient(conn, scnr);
                     break;
                 case 2:
-                    addDepartment(conn, scnr);
+//                    addDepartment(conn, scnr);
                     break;
                 case 3:
                     addProcedure(conn, scnr);
@@ -153,11 +153,11 @@ public class P1 {
 
     }//end of addPatient
 
-    private static void addDepartment(Connection conn, Scanner scnr) {
-        PreparedStatement Department = conn.prepareStatement("INSERT INTO DEPARTMENT(");
-
-
-    }
+//    private static void addDepartment(Connection conn, Scanner scnr) {
+//        PreparedStatement Department = conn.prepareStatement("INSERT INTO DEPARTMENT(");
+//
+//
+//    }
 
 
     private static void addProcedure(Connection conn, Scanner scnr) {
