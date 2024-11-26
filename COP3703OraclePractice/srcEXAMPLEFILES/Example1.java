@@ -1,101 +1,99 @@
 /* Example1.java
  * This sample shows how to list codes, descriptions, prices, and quantities on hand
  * of all products from the PRODUCT table, using statement.
- * 
+ *
  * It uses the JDBC THIN driver.
  */
 
 // You need to import the java.sql package to use JDBC
+
 import java.sql.*;
-import java.io.*;  
+import java.io.*;
 import java.sql.PreparedStatement;
 
-class Example1
-{
-  public static void main (String args [])
-       throws SQLException
-  {
+class Example1 {
+    public static void main(String args[])
+            throws SQLException {
 
-    //System.out.print("userid: ");
-    String uid = "yourUserName";
+        //System.out.print("userid: ");
+        String uid = "yourUserName";
 
-    //System.out.print("password: ");
-    String pword = "yourPassword";
+        //System.out.print("password: ");
+        String pword = "yourPassword";
 
-    String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+        String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
 
-    // Load the Oracle JDBC driver
+        // Load the Oracle JDBC driver
 
-    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 
-    // Connect to the database
-    
-    Connection conn =
-      DriverManager.getConnection (url, uid, pword);
-    System.out.println(conn);
+        // Connect to the database
 
-    // Create a Statement
+        Connection conn =
+                DriverManager.getConnection(url, uid, pword);
+        System.out.println(conn);
 
-    Statement stmt = conn.createStatement ();
+        // Create a Statement
 
-    System.out.println("\nEnter vendor code, \nThen product code, " +
-                       "description, price, and quantity on hand " +
-                       "will be displayed\n");
+        Statement stmt = conn.createStatement();
 
-    
-    int v = 1;
+        System.out.println("\nEnter vendor code, \nThen product code, " +
+                "description, price, and quantity on hand " +
+                "will be displayed\n");
 
-    while (v != 0) {
-      // read vendor code
-      System.out.print("Vendor Code (enter 0 for exit): ");
-      v = getInt();
-      //System.out.println(v);
-      // Select the P_CODE, P_DESCRIPT, P_PRICE, and P_ONHAND columns from the 
-      // PRODUCT table
 
-      String q = "select P_CODE, P_DESCRIPT, P_PRICE, P_ONHAND " +
-               "from PRODUCT " +
-               "where V_CODE= " + v;
-      
-      ResultSet rset = stmt.executeQuery(q);
+        int v = 1;
 
-      System.out.println("\n");
+        while (v != 0) {
+            // read vendor code
+            System.out.print("Vendor Code (enter 0 for exit): ");
+            v = getInt();
+            //System.out.println(v);
+            // Select the P_CODE, P_DESCRIPT, P_PRICE, and P_ONHAND columns from the
+            // PRODUCT table
 
-      // Iterate through the result
+            String q = "select P_CODE, P_DESCRIPT, P_PRICE, P_ONHAND " +
+                    "from PRODUCT " +
+                    "where V_CODE= " + v;
 
-      while (rset.next ()) {
-        String pcode = rset.getString("P_CODE");
-        String pdescript = rset.getString("P_DESCRIPT");
-        float pprice = rset.getFloat("P_PRICE");
-        int ponhand = rset.getInt("P_ONHAND");        
-        System.out.println (pcode + ":" + pdescript + ":" + 
-                            pprice + ":" + ponhand);
-      } // while rset
+            ResultSet rset = stmt.executeQuery(q);
 
-      System.out.println("\n");
-    } // while v
-    conn.close();
-  } // main
+            System.out.println("\n");
 
- public static String getString() {
-	try {
-	    StringBuffer buffer = new StringBuffer();
-        int c = System.in.read();
-        while (c != '\n' && c != -1) {
-    	  buffer.append((char)c);
-          c = System.in.read();
-          }
-        return buffer.toString().trim();
+            // Iterate through the result
+
+            while (rset.next()) {
+                String pcode = rset.getString("P_CODE");
+                String pdescript = rset.getString("P_DESCRIPT");
+                float pprice = rset.getFloat("P_PRICE");
+                int ponhand = rset.getInt("P_ONHAND");
+                System.out.println(pcode + ":" + pdescript + ":" +
+                        pprice + ":" + ponhand);
+            } // while rset
+
+            System.out.println("\n");
+        } // while v
+        conn.close();
+    } // main
+
+    public static String getString() {
+        try {
+            StringBuffer buffer = new StringBuffer();
+            int c = System.in.read();
+            while (c != '\n' && c != -1) {
+                buffer.append((char) c);
+                c = System.in.read();
+            }
+            return buffer.toString().trim();
+        } catch (IOException e) {
+            return "";
         }
-        catch (IOException e){return "";}
     }
 
-  public static int getInt() 
-
-  {
-      String s= getString();
-      return Integer.parseInt(s);
-  }
+    public static int getInt() {
+        String s = getString();
+        return Integer.parseInt(s);
+    }
 
 } // ex1
 
