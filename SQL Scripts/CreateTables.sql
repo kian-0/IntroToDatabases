@@ -9,12 +9,12 @@ sex varchar(10) not null,
 birthdate date not null,
 condit varchar(10) not null check (condit in ('Critical', 'Stable', 'Fair')),
 curraddress varchar(50),  
-currphone numeric(9),
+currphone numeric(10),
 permaddress varchar(50) not null,
 permcity varchar(20),
 permstate char(2),
 permzipp numeric(5),
-permphone numeric(9),
+permphone numeric(10),
 doctorID char(9),
 primary key(PID),
 unique (ssn)
@@ -27,7 +27,7 @@ fname varchar(10) not null,
 minitial char(1),
 lname varchar(10) not null,
 address varchar(50)not null,
-phonenumber numeric(9) not null,
+phonenumber numeric(10) not null,
 birthdate date not null,
 dcode char(4) DEFAULT '0000',
 primary key (DID),
@@ -47,7 +47,7 @@ unique (dname)
 create table medication(
 mname varchar(20) not null,
 mdescription varchar(50) not null,
-manufactuer varchar(20) not null,
+manufacturer varchar(20) not null,
 primary key (mname)
 );
 
@@ -112,7 +112,7 @@ foreign key (mname) references medication(mname)
 create table undergo(
 patientID char(9) not null,
 doctorID char(9) not null,
-datePreformed date not null,
+datePerformed date not null,
 notes varchar(100),
 pnumber char(7) not null,
 primary key (patientID, pnumber, doctorID), /*due to this primary key set up it means that you are able to insert multiple doctors for the same operaction*/
