@@ -1,0 +1,9 @@
+drop table doctor cascade constraints;
+drop table medication cascade constraints;
+drop table operation cascade constraints;
+drop table patient cascade constraints;
+drop table prescription cascade constraints;
+drop table secondarydoctor cascade constraints;
+drop table undergo cascade constraints;
+drop table department cascade constraints;
+drop table interactionrecord cascade constraints;
