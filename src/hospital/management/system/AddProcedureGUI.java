@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddProcedureGUI {
-    public AddProcedureGUI() {
+    public AddProcedureGUI(Connection conn) {
         JFrame frame = new JFrame("Add Procedure/Operation");
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,7 +52,7 @@ public class AddProcedureGUI {
                 String duration = durationField.getText();
                 String department = departmentField.getText();
 
-                try (Connection conn = DatabaseConnector.getConnection()) {
+                try {
                     String query = "INSERT INTO OPERATION(PNUMBER, PNAME, PDESCRIPTION, PDURATION, OFFERDEP) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, number);

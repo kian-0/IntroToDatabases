@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddInteractionGUI {
-    public AddInteractionGUI() {
+    public AddInteractionGUI(Connection conn) {
         JFrame frame = new JFrame("Add Interaction Record");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,7 +47,7 @@ public class AddInteractionGUI {
                 String description = descriptionField.getText();
                 String patientId = patientIdField.getText();
 
-                try (Connection conn = DatabaseConnector.getConnection()) {
+                try {
                     String query = "INSERT INTO INTERACTIONRECORD(IID, IDATE, DESCRIPTION, PATIENTID) VALUES (?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, interactionId);

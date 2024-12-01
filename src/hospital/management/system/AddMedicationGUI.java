@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddMedicationGUI {
-    public AddMedicationGUI() {
+    public AddMedicationGUI(Connection conn) {
         JFrame frame = new JFrame("Add Medication");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,7 +42,7 @@ public class AddMedicationGUI {
                 String description = descriptionField.getText();
                 String manufacturer = manufacturerField.getText();
 
-                try (Connection conn = DatabaseConnector.getConnection()) {
+                try {
                     String query = "INSERT INTO MEDICATION(MNAME, MDESCRIPTION, MANUFACTURER) VALUES (?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, name);
