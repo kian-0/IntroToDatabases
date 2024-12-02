@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddSecondaryDoctorGUI {
-    public AddSecondaryDoctorGUI(Connection conn) {
+    public AddSecondaryDoctorGUI() {
         // Create the frame
         JFrame frame = new JFrame("Assign Doctor to Patient");
         frame.setSize(400, 200);
@@ -54,7 +54,7 @@ public class AddSecondaryDoctorGUI {
                 }
 
                 // Attempt to insert data into the database
-                try {
+                try (Connection conn = DatabaseConnector.getConnection()) {
                     String query = "INSERT INTO PATIENT_DOCTOR (PATIENT_ID, DOCTOR_ID) VALUES (?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, patientId);

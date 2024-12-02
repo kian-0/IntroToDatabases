@@ -112,8 +112,8 @@ public class MainGUI {
         addInteractionButton.addActionListener(e -> new AddInteractionGUI(con));
         addMedicationButton.addActionListener(e -> new AddMedicationGUI(con));
         generateRecordButton.addActionListener(e -> new GenerateHealthRecordGUI(con));
-        findProcedureButton.addActionListener(e -> new FindProceduresByDepartmentGUI());
-        listProceduresButton.addActionListener(e -> new ListProceduresByDoctorGUI());
+        findProcedureButton.addActionListener(e -> new FindProceduresByDepartmentGUI(con));
+        listProceduresButton.addActionListener(e -> new ListProceduresByDoctorGUI(con));
         exitButton.addActionListener(e -> System.exit(0));
 
         // Add panel to the frame
