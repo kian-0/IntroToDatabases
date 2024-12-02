@@ -231,8 +231,7 @@ public class P1 {
     }// end of try/catch
 	
 	}//end of addProcedureOperation
-	
-	/*
+
 	// addPatient Complete
 	private static void addPatient(Connection conn, Scanner scnr) {
 	    try {
@@ -291,23 +290,12 @@ public class P1 {
 	        System.out.println("Insert DoctorId\n");
 	        Patient.setString(16, getString());
 	        
-	        
-	        
-	        
-	        
-	        
+        
 	        //Executes the Statement
 	        Patient.executeUpdate();
 	        System.out.println("Patient Added!");
 	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
+
 	    } catch (SQLException e) {
 	        System.out.println("SQL Error: " + e.getMessage());
 	        e.printStackTrace();
@@ -317,8 +305,7 @@ public class P1 {
 	
 	
 	
-	*/
-	
+
 	// addPatient Complete
 	private static void addPatient(Connection conn, Scanner scnr) {
 	    try {
@@ -508,13 +495,12 @@ public class P1 {
 		
 		/*
 		 * In order to generate the record we first need to get the Patient Id
-		 * this is finished but not tested yet
 		 * 
 		 */
 		
 		
 		private static void generateRecord(Connection conn, Scanner scnr) {
-			
+
 			try {
 				
 			     System.out.println("Enter Patient ID to generate health record:");
@@ -578,7 +564,7 @@ public class P1 {
 			        }
 
 			        System.out.println("\nHealth record generated successfully!");
-	
+				
 				
 			}catch(SQLException e) {
 				

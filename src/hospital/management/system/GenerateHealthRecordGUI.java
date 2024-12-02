@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GenerateHealthRecordGUI {
-    public GenerateHealthRecordGUI() {
+
+    public GenerateHealthRecordGUI(Connection conn) {
+
         JFrame frame = new JFrame("Generate Health Record");
         frame.setSize(600, 500);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -33,7 +35,8 @@ public class GenerateHealthRecordGUI {
 
         fetchButton.addActionListener(e -> {
             String patientId = patientIdField.getText();
-            try (Connection conn = DatabaseConnector.getConnection()) {
+
+            try {
                 String query = "SELECT * FROM PATIENT WHERE PID = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setString(1, patientId);
