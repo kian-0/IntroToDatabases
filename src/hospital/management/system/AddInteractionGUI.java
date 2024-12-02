@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddInteractionGUI {
+
     public AddInteractionGUI(Connection conn) {
+
         JFrame frame = new JFrame("Add Interaction Record");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -46,6 +48,7 @@ public class AddInteractionGUI {
                 String date = dateField.getText();
                 String description = descriptionField.getText();
                 String patientId = patientIdField.getText();
+
 
                 try {
                     String query = "INSERT INTO INTERACTIONRECORD(IID, IDATE, DESCRIPTION, PATIENTID) VALUES (?, ?, ?, ?)";

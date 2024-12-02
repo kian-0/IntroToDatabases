@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class AddPatientGUI {
     public AddPatientGUI(Connection conn) {
+
         JFrame frame = new JFrame("Add Patient");
         frame.setSize(500, 600);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -77,7 +78,9 @@ public class AddPatientGUI {
                 String phone = phoneField.getText();
                 String doctorId = doctorIdField.getText();
 
+
                 try {
+
                     String query = "INSERT INTO PATIENT(PID, SSN, FNAME, LNAME, SEX, BIRTHDATE, CONDIT, CURRADDRESS, CURRPHONE, DOCTORID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, pid);

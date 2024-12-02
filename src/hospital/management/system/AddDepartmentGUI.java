@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddDepartmentGUI {
+
     public AddDepartmentGUI(Connection conn) {
+
         JFrame frame = new JFrame("Add Department");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,7 +54,9 @@ public class AddDepartmentGUI {
                 String phone = phoneField.getText();
                 String head = headField.getText();
 
+
                 try{
+
                     String query = "INSERT INTO DEPARTMENT(DNAME, DCODE, DNUMBER, DPHONE, DHEADID) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, name);

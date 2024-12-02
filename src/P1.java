@@ -231,8 +231,7 @@ public class P1 {
     }// end of try/catch
 	
 	}//end of addProcedureOperation
-	
-	
+
 	// addPatient Complete
 	private static void addPatient(Connection conn, Scanner scnr) {
 	    try {
@@ -291,10 +290,12 @@ public class P1 {
 	        System.out.println("Insert DoctorId\n");
 	        Patient.setString(16, getString());
 	        
+        
 	        //Executes the Statement
 	        Patient.executeUpdate();
 	        System.out.println("Patient Added!");
 	        
+
 	    } catch (SQLException e) {
 	        System.out.println("SQL Error: " + e.getMessage());
 	        e.printStackTrace();
@@ -304,7 +305,83 @@ public class P1 {
 	
 	
 	
-	
+
+	// addPatient Complete
+	private static void addPatient(Connection conn, Scanner scnr) {
+	    try {
+	        // Prepare the SQL statement
+	        PreparedStatement Patient = conn.prepareStatement(
+	            "INSERT INTO PATIENT(PID, ssn, fname, minitial, lname, sex, birthdate, condit, curraddress, " +
+	            "currphone, permaddress, permcity, permstate, permzipp, permphone, doctorID, SecondaryDoctor) " +
+	            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+	        System.out.println("Insert PID\n");
+	        Patient.setString(1, getString());
+	        
+	        System.out.println("Insert ssn\n");
+	        Patient.setString(2, getString());
+	        
+	        System.out.println("Insert fname\n");
+	        Patient.setString(3, getString());
+	        
+	        System.out.println("Insert mininitial\n");
+	        Patient.setString(4, getString());
+	        
+	        System.out.println("Insert lname\n");
+	        Patient.setString(5, getString());
+	        
+	        System.out.println("Insert sex\n");
+	        Patient.setString(6, getString());
+	        
+	        System.out.println("Insert birthdate (YYYY-MM-DD)\n");
+	        Patient.setDate(7, java.sql.Date.valueOf(getString())); // Convert to SQL Date
+	        
+	        System.out.println("Insert condit\n");
+	        Patient.setString(8, getString());
+	        
+	        System.out.println("Insert curraddress\n");
+	        Patient.setString(9, getString());
+	        
+	        System.out.println("Insert currphone\n");
+	        Patient.setString(10, getString());
+	        
+	        System.out.println("Insert permaddress\n");
+	        Patient.setString(11, getString());
+	        
+	        System.out.println("Insert permcity\n");
+	        Patient.setString(12, getString());
+	        
+	        System.out.println("Insert permstate\n");
+	        Patient.setString(13, getString());
+	        
+	        System.out.println("Insert permzipp\n");
+	        Patient.setInt(14, getInt());
+	        
+	        System.out.println("Insert permphone\n");
+	        Patient.setString(15, getString());
+	        
+	        System.out.println("Insert DoctorId\n");
+	        Patient.setString(16, getString());
+	        
+	        // Ask if the patient has a second doctor
+	        System.out.println("Does the patient have a second doctor? (Y/N): ");
+	        String hasSecondDoctor = scnr.nextLine().trim().toUpperCase();
+	        if (hasSecondDoctor.equals("Y")) {
+	            System.out.println("Enter the name of the second doctor: ");
+	            Patient.setString(17, getString());
+	        } else {
+	            Patient.setString(17, null); // Set to null if no secondary doctor
+	        }
+	        
+	        // Execute the Statement
+	        Patient.executeUpdate();
+	        System.out.println("Patient Added!");
+	        
+	    } catch (SQLException e) {
+	        System.out.println("SQL Error: " + e.getMessage());
+	        e.printStackTrace();
+	    } // end of try/catch
+	} // end of addPatient=
 	
 	// addDepartment Complete
 	private static void addDepartment(Connection conn, Scanner scnr) {
@@ -423,14 +500,70 @@ public class P1 {
 		
 		
 		private static void generateRecord(Connection conn, Scanner scnr) {
+
 			try {
 				
-				PreparedStatement generateRecord = conn.prepareStatement("");
-				
-				System.out.println("Please insert Patient Id");
-				String Patient = getString();
-				
-				
+			     System.out.println("Enter Patient ID to generate health record:");
+			     String patientID = getString();
+
+			        
+			     PreparedStatement patientStmt = conn.prepareStatement("SELECT * FROM PATIENT WHERE PID = ?");
+			        
+			     patientStmt.setString(1, patientID);
+
+			        ResultSet patientRs = patientStmt.executeQuery();
+			        if (patientRs.next()) {
+			            System.out.println("\n--- Patient Details ---");
+			            System.out.println("Patient ID: " + patientRs.getString("PID"));
+			            System.out.println("Name: " + patientRs.getString("fname") + " " + patientRs.getString("lname"));
+			            System.out.println("SSN: " + patientRs.getString("ssn"));
+			            System.out.println("Date of Birth: " + patientRs.getDate("birthdate"));
+			            System.out.println("Condition: " + patientRs.getString("condit"));
+			        } else {
+			            System.out.println("No patient found with the given ID.");
+			            return;
+			        }
+
+			       // This is to get interactions
+			       
+			        PreparedStatement interactionStmt = conn.prepareStatement("SELECT * FROM INTERACTION WHERE patientID = ?");
+			        interactionStmt.setString(1, patientID);
+
+			        ResultSet interactionRs = interactionStmt.executeQuery();
+			        System.out.println("\n--- Interaction Records ---");
+			        while (interactionRs.next()) {
+			            System.out.println("Date: " + interactionRs.getDate("interactionDate") +
+			                    ", Notes: " + interactionRs.getString("notes"));
+			        }
+
+			       // this is to get medications
+			        
+			        PreparedStatement medicationStmt = conn.prepareStatement("SELECT M.mname, M.mdescription FROM PRESCRIPTION P " +
+			                "JOIN MEDICATION M ON P.mname = M.mname WHERE P.patientID = ?";);
+			        medicationStmt.setString(1, patientID);
+
+			        ResultSet medicationRs = medicationStmt.executeQuery();
+			        System.out.println("\n--- Medications ---");
+			        while (medicationRs.next()) {
+			            System.out.println("Name: " + medicationRs.getString("mname") +
+			                    ", Description: " + medicationRs.getString("mdescription"));
+			        }
+
+			       // this is to get procedures undergone
+			        
+			        PreparedStatement procedureStmt = conn.prepareStatement("SELECT O.pname, O.pdescription, U.datePerformed FROM UNDERGO U " +
+			                "JOIN OPERATION O ON U.pnumber = O.pnumber WHERE U.patientID = ?";);
+			        procedureStmt.setString(1, patientID);
+
+			        ResultSet procedureRs = procedureStmt.executeQuery();
+			        System.out.println("\n--- Procedures Underwent ---");
+			        while (procedureRs.next()) {
+			            System.out.println("Name: " + procedureRs.getString("pname") +
+			                    ", Description: " + procedureRs.getString("pdescription") +
+			                    ", Date Performed: " + procedureRs.getDate("datePerformed"));
+			        }
+
+			        System.out.println("\nHealth record generated successfully!");
 				
 				
 			}catch(SQLException e) {

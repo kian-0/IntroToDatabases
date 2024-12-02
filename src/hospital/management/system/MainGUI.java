@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -70,6 +71,7 @@ public class MainGUI {
     	try {
 			Connection con = DriverManager.getConnection(url, username, password);
 		
+
         JFrame frame = new JFrame("Hospital Management System");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,8 +112,8 @@ public class MainGUI {
         addInteractionButton.addActionListener(e -> new AddInteractionGUI(con));
         addMedicationButton.addActionListener(e -> new AddMedicationGUI(con));
         generateRecordButton.addActionListener(e -> new GenerateHealthRecordGUI(con));
-        findProcedureButton.addActionListener(e -> new FindProceduresByDepartmentGUI());
-        listProceduresButton.addActionListener(e -> new ListProceduresByDoctorGUI());
+        findProcedureButton.addActionListener(e -> new FindProceduresByDepartmentGUI(con));
+        listProceduresButton.addActionListener(e -> new ListProceduresByDoctorGUI(con));
         exitButton.addActionListener(e -> System.exit(0));
 
         // Add panel to the frame
@@ -119,6 +121,7 @@ public class MainGUI {
 
         // Set frame visibility
         frame.setVisible(true);
+
     	} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

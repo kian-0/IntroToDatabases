@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddDoctorGUI {
+
     public AddDoctorGUI(Connection conn) {
         // Create the frame
         JFrame frame = new JFrame("Add Doctor");
@@ -102,7 +102,9 @@ public class AddDoctorGUI {
                 }
 
                 // Attempt to insert data into the database
+
                 try  {
+
                     String query = "INSERT INTO DOCTOR(DID, SSN, FNAME, LNAME, ADDRESS, PHONENUMBER, BIRTHDATE, DCODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, id);
