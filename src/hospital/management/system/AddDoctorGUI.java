@@ -7,22 +7,17 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-
-    public AddDoctorGUI(Connection conn) {
-        // Create the frame
-        JFrame frame = new JFrame("Add Doctor");
-        frame.setSize(500, 500);
+public class AddPatientGUI {
+    public AddPatientGUI() {
+        JFrame frame = new JFrame("Add Patient");
+        frame.setSize(500, 600);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Panel with GridLayout
-        JPanel panel = new JPanel(new GridLayout(9, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(16, 2, 10, 10));
 
-        // Create labels and text fields
-        JLabel idLabel = new JLabel("Doctor ID:");
-        JTextField idField = new JTextField();
+        JLabel pidLabel = new JLabel("Patient ID:");
+        JTextField pidField = new JTextField();
 
         JLabel ssnLabel = new JLabel("SSN:");
         JTextField ssnField = new JTextField();
@@ -33,113 +28,86 @@ import java.util.regex.Pattern;
         JLabel lnameLabel = new JLabel("Last Name:");
         JTextField lnameField = new JTextField();
 
-        JLabel addressLabel = new JLabel("Address:");
-        JTextField addressField = new JTextField();
+        JLabel sexLabel = new JLabel("Sex:");
+        JTextField sexField = new JTextField();
 
-        JLabel phoneLabel = new JLabel("Phone:");
-        JTextField phoneField = new JTextField();
+        JLabel bdateLabel = new JLabel("Birthdate (YYYY-MM-DD):");
+        JTextField bdateField = new JTextField();
 
-        JLabel birthdateLabel = new JLabel("Birthdate (YYYY-MM-DD):");
-        JTextField birthdateField = new JTextField();
+        JLabel conditionLabel = new JLabel("Condition:");
+        JTextField conditionField = new JTextField();
 
-        JLabel departmentLabel = new JLabel("Department Code:");
-        JTextField departmentField = new JTextField();
+        JLabel currentAddressLabel = new JLabel("Current Address:");
+        JTextField currentAddressField = new JTextField();
+        
+        JLabel permanentAddressLabel = new JLabel("Permanent Address:");
+        JTextField permanentAddressField = new JTextField();
 
-        // Submit button
+        JLabel currentPhoneLabel = new JLabel("Current Phone:");
+        JTextField currentPhoneField = new JTextField();
+        
+        JLabel permanentPhoneLabel = new JLabel("Permanent Phone:");
+        JTextField permanentPhoneField = new JTextField();
+
+        JLabel doctorIdLabel = new JLabel("Primary Doctor ID:");
+        JTextField doctorIdField = new JTextField();
+
         JButton submitButton = new JButton("Submit");
 
-        // Add components to panel
-        panel.add(idLabel); panel.add(idField);
+        panel.add(pidLabel); panel.add(pidField);
         panel.add(ssnLabel); panel.add(ssnField);
         panel.add(fnameLabel); panel.add(fnameField);
         panel.add(lnameLabel); panel.add(lnameField);
-        panel.add(addressLabel); panel.add(addressField);
-        panel.add(phoneLabel); panel.add(phoneField);
-        panel.add(birthdateLabel); panel.add(birthdateField);
-        panel.add(departmentLabel); panel.add(departmentField);
+        panel.add(sexLabel); panel.add(sexField);
+        panel.add(bdateLabel); panel.add(bdateField);
+        panel.add(conditionLabel); panel.add(conditionField);
+        panel.add(currentAddressLabel); panel.add(currentAddressField);
+        panel.add(permanentAddressLabel); panel.add(permanentAddressField);
+        panel.add(currentPhoneLabel); panel.add(currentPhoneField);
+        panel.add(permanentPhoneLabel); panel.add(permanentPhoneField);
+        panel.add(doctorIdLabel); panel.add(doctorIdField);
         panel.add(submitButton);
 
-        // Add panel to frame
         frame.add(panel);
         frame.setVisible(true);
 
-        // Submit button action listener
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = idField.getText();
+                String pid = pidField.getText();
                 String ssn = ssnField.getText();
                 String fname = fnameField.getText();
                 String lname = lnameField.getText();
-                String address = addressField.getText();
-                String phone = phoneField.getText();
-                String birthdate = birthdateField.getText();
-                String department = departmentField.getText();
+                String sex = sexField.getText();
+                String bdate = bdateField.getText();
+                String condition = conditionField.getText();
+                String currentAddress = currentAddressField.getText();
+                String permanentAddress = permanentAddressField.getText();
+                String currentPhone = currentPhoneField.getText();
+                String permanentPhone = permanentPhoneField.getText();
+                String doctorId = doctorIdField.getText();
 
-                // Perform basic validation
-                if (id.isEmpty() || ssn.isEmpty() || fname.isEmpty() || lname.isEmpty() || 
-                    address.isEmpty() || phone.isEmpty() || birthdate.isEmpty() || department.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please fill in all fields.");
-                    return;
-                }
-
-                // Validate SSN (just a simple example of validation)
-                if (!isValidSSN(ssn)) {
-                    JOptionPane.showMessageDialog(frame, "Invalid SSN format.");
-                    return;
-                }
-
-                // Validate phone number format (e.g., only digits and length of 10)
-                if (!isValidPhone(phone)) {
-                    JOptionPane.showMessageDialog(frame, "Invalid phone number format.");
-                    return;
-                }
-
-                // Validate birthdate (simple YYYY-MM-DD check)
-                if (!isValidBirthdate(birthdate)) {
-                    JOptionPane.showMessageDialog(frame, "Invalid birthdate format. Use YYYY-MM-DD.");
-                    return;
-                }
-
-                // Attempt to insert data into the database
-
-                try  {
-
-                    String query = "INSERT INTO DOCTOR(DID, SSN, FNAME, LNAME, ADDRESS, PHONENUMBER, BIRTHDATE, DCODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                try (Connection conn = DatabaseConnector.getConnection()) {
+                    String query = "INSERT INTO PATIENT(PID, SSN, FNAME, LNAME, SEX, BIRTHDATE, CONDIT, CURRADDRESS, CURRPHONE, DOCTORID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
-                    stmt.setString(1, id);
+                    stmt.setString(1, pid);
                     stmt.setString(2, ssn);
                     stmt.setString(3, fname);
                     stmt.setString(4, lname);
-                    stmt.setString(5, address);
-                    stmt.setString(6, phone);
-                    stmt.setString(7, birthdate);
-                    stmt.setString(8, department);
+                    stmt.setString(5, sex);
+                    stmt.setString(6, bdate);
+                    stmt.setString(7, condition);
+                    stmt.setString(8, permanentAddress);
+                    stmt.setString(8, currentAddress);
+                    stmt.setString(9, currentPhone);
+                    stmt.setString(9, permanentPhone);
+                    stmt.setString(10, doctorId);
                     stmt.executeUpdate();
-                    JOptionPane.showMessageDialog(frame, "Doctor added successfully!");
+                    JOptionPane.showMessageDialog(frame, "Patient added successfully!");
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
                 }
             }
         });
-    }
-
-    // Helper method to validate SSN format (simple example: 123-45-6789)
-    private boolean isValidSSN(String ssn) {
-        Pattern pattern = Pattern.compile("^(?!000|666|9\\d\\d)\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$");
-        Matcher matcher = pattern.matcher(ssn);
-        return matcher.matches();
-    }
-
-    // Helper method to validate phone number (e.g., 123-456-7890)
-    private boolean isValidPhone(String phone) {
-        return phone.matches("\\d{3}-\\d{3}-\\d{4}");
-    }
-
-    // Helper method to validate birthdate format (YYYY-MM-DD)
-    private boolean isValidBirthdate(String birthdate) {
-        Pattern pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-        Matcher matcher = pattern.matcher(birthdate);
-        return matcher.matches();
     }
 }
