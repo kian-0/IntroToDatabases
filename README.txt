@@ -1,18 +1,49 @@
-How to set up:
+# How to set up:
 In Oracle SQL Developer
 
 Run CreateTable to create DB
-Run Run InsertTest to insert text value examples in DB
+Run InsertTest to insert text value examples in DB
 
 Run DropTable to clear everything
 
-Project Description
+src folder in Eclipse IDE
+With Oracle Database driver ojdbc1.jar in build path as an external library
+
+Run P1 for terminal use
+
+Run MainGUI for limited GUI use
+
+# Project Contributions
+Our project involved a collaborative effort where each of us contributed equally to the completion of key deliverables.
+1. Ben Draper – Relational Database Schema Design & Frontend Terminal
+* Ben was responsible for designing the relational database schema for the project.
+Frontend:
+* Created the basic interaction interface for the back end design
+* Display menu options in the menu and asks for user for the appropriate information based on the option selected
+* Implement SQL commands to be executed in the interface
+* Provided needed changes for backend
+
+2. Aryasomayajula Aditya – ER Diagram Design & GUI Design
+* Aditya led the design of the Entity-Relationship (ER) Diagram for the project.
+GUI:
+* Created the layout for the GUI
+* Implemented the basic interaction interface functions to work in the GUI
+
+3. Kian Aliwalas – Finalization/Editing & Backend design
+* Kian took on the responsibility of finalizing and refining both the relational database schema and the ER Diagram.
+Backend:
+* Designed the table layout for the backend database
+* Created script to build/drop the database table
+* Created Insert script to demonstrate inserting data into the database
+* Provided guidance on features and functions required
+
+# Project Description
 Introduction
 Please read this document carefully in its entirety before starting your work.
 
 The purpose of this project is to provide you with hands-on experience in the design, creation, development, and maintenance of a relational database. This project provides a realistic experience to apply the knowledge and skills you learn in class. The project will be completed in two phases where the first phase focuses on the design of a database system and the second phase focuses on its implementation. You will be completing this project in a group (2-3 members per group) and you will work in the same group for the entire project. But, note you may get a different score than your group depending on your contributions to the project. 
 
-Requirements
+## Requirements
 Develop a database (back-end) and a software application (front-end) for managing data in a hospital as described below:
 
 The hospital keeps track of each patient's name (first name, middle initial, and last name), patient ID (letter "P" followed by 8 digits), social security number (digit number in the format "AAA-GG-SSSS"), current address and phone, permanent address and phone (XXX-XXX-XXXX), birthdate (format MM-DD-YYYY), sex (male, female or user-provided), patient condition (Critical, Stable or Fair ), primary care doctor, secondary care doctor (if any), and the procedures they undergo (regular visit, surgery, MRI, x-ray, etc). Some user applications need to refer to the city, state, and zip of the patient's permanent address, and to the patient's last name. Both social security numbers and patient ID have unique values for each patient.
@@ -34,7 +65,7 @@ Technologies
 Backend - Relational database using Oracle (or another DBMS with my permission) - We have set up an Oracle server for the class and you will be provided with the login information before you start part 2 of the project.  
 Front-end interactive interface using Java (or another language with my permission). The front-end can be a command-line interface or a graphical user interface (GUI). Extra credit will be given to developing a GUI.
 
-Part 1 - ER Diagram and Relational Schema (check Canvas for the due date)
+# Part 1 - ER Diagram and Relational Schema (check Canvas for the due date)
 Draw an ER or EER, diagram for your database design (use Chapters 3 and 4 as your guide) Then convert your ER (or EER) diagram into a relational database schema diagram (use Chapters 5 and 9  as your guide).  You may use any software tool of your choice to develop diagrams, but handwritten diagrams will not be accepted.
 
 Guidelines for creating ER/EER diagram
@@ -73,7 +104,7 @@ Submit a pdf document that contains your (1) ER/ERR diagram and (2) relational d
 Text document detailing the contributions of each team member towards the deliverables.
  
 
-Part 2 - Database System Implementation (check Canvas for the due date)
+# Part 2 - Database System Implementation (check Canvas for the due date)
 Normalize the relations developed in Part 1 if applicable and update the related diagrams developed in Part 1 accordingly.
 Implement the back-end: Implement necessary tables based on your normalized relational schema. For each table created, you should include:
 name (be descriptive) of each attribute
@@ -90,4 +121,4 @@ Deliverables (worth 60% of project grade)
 Source code of the database system. 
 Updated ER/EER diagrams and relational schemas.
 10-minute demonstration during class-time (scheduled during the final two weeks of the classes).
-Text document detailing the contributions of each team member towards the deliverables.
+
