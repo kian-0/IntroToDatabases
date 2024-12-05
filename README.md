@@ -17,7 +17,7 @@ Run MainGUI for limited GUI use
 Our project involved a collaborative effort where each of us contributed equally to the completion of key deliverables.
 1. Ben Draper – Relational Database Schema Design & Frontend Terminal
 * Ben was responsible for designing the relational database schema for the project.
-Frontend:
+* Frontend:
 * Created the basic interaction interface for the back end design
 * Display menu options in the menu and asks for user for the appropriate information based on the option selected
 * Implement SQL commands to be executed in the interface
@@ -25,13 +25,13 @@ Frontend:
 
 2. Aryasomayajula Aditya – ER Diagram Design & GUI Design
 * Aditya led the design of the Entity-Relationship (ER) Diagram for the project.
-GUI:
+* GUI:
 * Created the layout for the GUI
 * Implemented the basic interaction interface functions to work in the GUI
 
 3. Kian Aliwalas – Finalization/Editing & Backend design
 * Kian took on the responsibility of finalizing and refining both the relational database schema and the ER Diagram.
-Backend:
+* Backend:
 * Designed the table layout for the backend database
 * Created script to build/drop the database table
 * Created Insert script to demonstrate inserting data into the database
