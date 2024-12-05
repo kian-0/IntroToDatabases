@@ -9,8 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AddPatientGUI {
-    public AddPatientGUI(Connection conn) {
-
+    public AddPatientGUI() {
         JFrame frame = new JFrame("Add Patient");
         frame.setSize(500, 600);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -38,11 +37,17 @@ public class AddPatientGUI {
         JLabel conditionLabel = new JLabel("Condition:");
         JTextField conditionField = new JTextField();
 
-        JLabel addressLabel = new JLabel("Address:");
-        JTextField addressField = new JTextField();
+        JLabel currentAddressLabel = new JLabel("Current Address:");
+        JTextField currentAddressField = new JTextField();
+        
+        JLabel permanentAddressLabel = new JLabel("Permanent Address:");
+        JTextField permanentAddressField = new JTextField();
 
-        JLabel phoneLabel = new JLabel("Phone:");
-        JTextField phoneField = new JTextField();
+        JLabel currentPhoneLabel = new JLabel("Current Phone:");
+        JTextField currentPhoneField = new JTextField();
+        
+        JLabel permanentPhoneLabel = new JLabel("Permanent Phone:");
+        JTextField permanentPhoneField = new JTextField();
 
         JLabel doctorIdLabel = new JLabel("Primary Doctor ID:");
         JTextField doctorIdField = new JTextField();
@@ -56,8 +61,10 @@ public class AddPatientGUI {
         panel.add(sexLabel); panel.add(sexField);
         panel.add(bdateLabel); panel.add(bdateField);
         panel.add(conditionLabel); panel.add(conditionField);
-        panel.add(addressLabel); panel.add(addressField);
-        panel.add(phoneLabel); panel.add(phoneField);
+        panel.add(currentAddressLabel); panel.add(currentAddressField);
+        panel.add(permanentAddressLabel); panel.add(permanentAddressField);
+        panel.add(currentPhoneLabel); panel.add(currentPhoneField);
+        panel.add(permanentPhoneLabel); panel.add(permanentPhoneField);
         panel.add(doctorIdLabel); panel.add(doctorIdField);
         panel.add(submitButton);
 
@@ -74,13 +81,13 @@ public class AddPatientGUI {
                 String sex = sexField.getText();
                 String bdate = bdateField.getText();
                 String condition = conditionField.getText();
-                String address = addressField.getText();
-                String phone = phoneField.getText();
+                String currentAddress = currentAddressField.getText();
+                String permanentAddress = permanentAddressField.getText();
+                String currentPhone = currentPhoneField.getText();
+                String permanentPhone = permanentPhoneField.getText();
                 String doctorId = doctorIdField.getText();
 
-
-                try {
-
+                try (Connection conn = DatabaseConnector.getConnection()) {
                     String query = "INSERT INTO PATIENT(PID, SSN, FNAME, LNAME, SEX, BIRTHDATE, CONDIT, CURRADDRESS, CURRPHONE, DOCTORID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, pid);
@@ -90,8 +97,10 @@ public class AddPatientGUI {
                     stmt.setString(5, sex);
                     stmt.setString(6, bdate);
                     stmt.setString(7, condition);
-                    stmt.setString(8, address);
-                    stmt.setString(9, phone);
+                    stmt.setString(8, permanentAddress);
+                    stmt.setString(8, currentAddress);
+                    stmt.setString(9, currentPhone);
+                    stmt.setString(9, permanentPhone);
                     stmt.setString(10, doctorId);
                     stmt.executeUpdate();
                     JOptionPane.showMessageDialog(frame, "Patient added successfully!");
